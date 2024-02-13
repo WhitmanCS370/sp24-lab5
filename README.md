@@ -7,7 +7,8 @@ Organization:
 * SDX-ch7: The code files for the _SDX Ch.7_ activity (as downloaded directly from the book website, unmodified) 
 
 ## Team Members for Part 1
-Enter your names here
+Sam Boerner
+Andrew Tate
 
 ## Team Roles for Part 1
 Who will start out as
