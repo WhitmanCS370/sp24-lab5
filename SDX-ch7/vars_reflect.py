@@ -33,6 +33,49 @@ def do_set(env, args):
     env[args[0]] = value
     return value
 
+def do_print(env, args):
+    for arg in args:
+        print(do(env, arg), end=" ")
+    print()
+
+def do_repeat(env, args):
+    assert len(args) == 2
+    assert isinstance(args[0], int)
+    for i in range(args[0]):
+        do(env, args[1])
+
+def do_equal(env, args):
+    assert len(args) == 2
+    return int(do(env,args[0]) == do(env,args[1]))
+
+def do_leq(env, args):
+    assert len(args) == 2
+    return int(do(env,args[0]) <= do(env,args[1]))
+
+def do_geq(env, args):
+    assert len(args) == 2
+    return int(do(env,args[0]) >= do(env,args[1]))
+
+def do_if(env, args):
+    assert len(args) == 3
+    if do(env, args[0]):
+        return do(env, args[1])
+    return do(env, args[2])
+
+def do_array(env, args):
+    assert len(args) == 1
+    return ["array"] + ([0] * do(env, args[0]))
+
+def do_array_set(env, args):
+    assert len(args) == 3
+    # We are assuming that the 0th argument is the array
+    args[do_get(env, [args[0]])][do(env, args[1]) + 1] = do(env, args[2])
+
+def do_array_get(env, args):
+    assert len(args) == 2
+    return args[do_get(env, [args[0]])][do(env, args[1]) + 1]
+
+
 # [lookup]
 OPS = {
     name.replace("do_", ""): func
@@ -45,6 +88,11 @@ OPS = {
 def do(env, expr):
     # Integers evaluate to themselves.
     if isinstance(expr, int):
+        return expr
+    if isinstance(expr, str):
+        return expr
+    # this is hacky but we're low on time
+    if isinstance(expr, list) and len(expr) > 0 and expr[0] == "array":
         return expr
 
     # Lists trigger function calls.
