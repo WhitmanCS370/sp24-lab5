@@ -21,4 +21,6 @@ You will switch halfway through the _SDX Ch. 7_ activity.
 Write your answers to the questions below.
 
 * What were the main ideas from SDX chapter 7?
+the main ideas from chapter seven is that there are interpreters and compilers and the interpreters read what you do and then do it. they do certian things based on the arguments. the complexity goes up based on the complexity of the things you are trying to interprite interpreter
 * What questions did you have about the material in the chapters? What did you find confusing?
+The thing that was most confusing to us was mostly the order of opperations and dealing with that inside of a interpreter can get complex and we were a little confused as well as the part where they were talking about adding expressions and defining new variables.

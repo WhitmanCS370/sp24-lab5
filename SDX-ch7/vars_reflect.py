@@ -33,6 +33,49 @@ def do_set(env, args):
     env[args[0]] = value
     return value
 
+def do_print(env,args):
+    assert len(args)>=0
+    for item in args:
+        print(do(env,item),end=" ")
+    print()
+
+def do_repeat(env,args):
+    assert len(args)==2
+    assert isinstance(args[0],int)
+    assert args[0]>0
+    for i in range(args[0]):
+        result=do(env,args[1])
+    return result
+
+def do_equal(env,args):
+    assert len(args)==2
+    assert isinstance(args[0],type(args[1]))
+    return args[0]==args[1]
+
+def do_leq(env,args):
+    assert len(args)==2
+    assert isinstance(args[0],type(args[1]))
+    return args[0]<=args[1]
+
+def do_geq(env,args):
+    assert len(args)==2
+    assert isinstance(args[0],type(args[1]))
+    return args[0]>=args[1]
+
+def do_if(env,args):
+    assert len(args)==3
+    if args[0]:
+        value=do(env,args[1])
+    else:
+        value=do(env,args[2])
+    return value
+
+def do_array(env,args):
+    assert isinstance(args[0],str)
+    assert args[0] > 0
+    return [0]*args[0]
+
+
 # [lookup]
 OPS = {
     name.replace("do_", ""): func
@@ -44,7 +87,7 @@ OPS = {
 # [do]
 def do(env, expr):
     # Integers evaluate to themselves.
-    if isinstance(expr, int):
+    if isinstance(expr, int) or isinstance(expr,str):
         return expr
 
     # Lists trigger function calls.
