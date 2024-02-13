@@ -128,6 +128,12 @@ def do_set_array(env, args):
     array[index] = value
     return value
 
+def do_get_array(env, args):
+    assert len(args) == 2
+    array = do(env, args[0])
+    index = do(env, args[1])
+    return array[index]
+
 # Lookup table of operations.
 OPERATIONS = {
     name.replace("do_", ""): func
