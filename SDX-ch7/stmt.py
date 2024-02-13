@@ -113,6 +113,13 @@ def do_set(env, args):
     env[args[0]] = value
     return value
 
+def do_array(env, args):
+    assert len(args) == 2
+    size = args[1]
+    array = [None] * size
+
+    return array
+
 # Lookup table of operations.
 OPERATIONS = {
     name.replace("do_", ""): func
