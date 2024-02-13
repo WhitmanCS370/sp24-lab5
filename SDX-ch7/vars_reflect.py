@@ -36,12 +36,9 @@ def do_set(env, args):
 def do_print(env, args):
     assert len(args) >= 1
     assert isinstance(args[0], str)
-    print(*args)
-    """for item in args:
-        result = (do(env,item))
-        print(result)
-        """
-    
+    for item in args:
+        result = do(env,item)
+        print(result)  
 
 def do_repeat(env, args):
     assert len(args) == 2
@@ -49,7 +46,8 @@ def do_repeat(env, args):
     count = args[0]
     loop_body = args[1]
     for _ in range(count):
-        do(env, loop_body)
+        result = do(env, loop_body)
+    return result
 
 def do_eq(env, args):
     assert len(args) == 2
@@ -68,10 +66,10 @@ def do_if(env, args):
     boolean_predicate = args[0]
     then_command = args[1]
     else_command = args[2]
-    if boolean_predicate:
-        do(env, then_command)
+    if do(boolean_predicate[0], boolean_predicate[1:]):
+        do(then_command[0], then_command[1:])
     else:
-        do(env, else_command)
+        do(else_command[0], else_command[1:])
 
 # [lookup]
 OPS = {
@@ -85,6 +83,8 @@ OPS = {
 def do(env, expr):
     # Integers evaluate to themselves.
     if isinstance(expr, int):
+        return expr
+    if isinstance(expr, str):
         return expr
 
     # Lists trigger function calls.
