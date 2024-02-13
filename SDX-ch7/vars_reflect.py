@@ -50,13 +50,10 @@ def do_repeat(env, args):
 
 def do_if(env, args):
     assert len(args) > 0
-    result = None
-    # cond = do(env, args)
-    if args[0]:
-        result = do(env, args[1])
-    else:
-        result = do(env, args[2])
-    # return result
+    if not args[0]:
+        return do(env, args[2])
+
+    return do(env, args[1])
 
 def do_equal(env, args):
     assert len(args) == 2
