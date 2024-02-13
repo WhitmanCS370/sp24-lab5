@@ -33,6 +33,42 @@ def do_set(env, args):
     env[args[0]] = value
     return value
 
+def do_print(env, args):
+    result = ""
+    for item in args:
+        if isinstance(item, str):
+            result += item + " "
+        else:
+            value = do(env, item)
+            result += str(value) + " "
+    print(result)
+
+def do_repeat(env, args):
+    assert isinstance(args[0], int)
+    for i in range(0, args[0]):
+        do(env, args[1])
+
+def do_leq(env, args):
+    val1 = do(env, args[0])
+    val2 = do(env, args[1])
+    return val1 <= val2
+
+def do_equal(env, args):
+    val1 = do(env, args[0])
+    val2 = do(env, args[1])
+    return val1 == val2   
+
+def do_geq(env, args):
+    val1 = do(env, args[0])
+    val2 = do(env, args[1])
+    return val1 >= val2
+
+def do_if(env, args):
+    if do(env, args[0]):
+        do(env, args[1])
+    else:
+        do(env, args[2])
+
 # [lookup]
 OPS = {
     name.replace("do_", ""): func
@@ -51,12 +87,18 @@ def do(env, expr):
     assert isinstance(expr, list)
     assert expr[0] in OPS, f"Unknown operation {expr[0]}"
     func = OPS[expr[0]]
-    return func(env, expr[1:])
+    val = func(env, expr[1:])
+    if sys.argv[1] == "--trace":
+        print(val)
+    return val
 # [/do]
 
 def main():
-    assert len(sys.argv) == 2, "Usage: vars_reflect.py filename"
-    with open(sys.argv[1], "r") as reader:
+    i = 1
+    assert len(sys.argv) >= 2, "Usage: vars_reflect.py filename"
+    if len(sys.argv) >= 2:
+        i = 2
+    with open(sys.argv[i], "r") as reader:
         program = json.load(reader)
     result = do({}, program)
     print(f"=> {result}")
