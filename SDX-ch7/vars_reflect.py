@@ -33,6 +33,16 @@ def do_set(env, args):
     env[args[0]] = value
     return value
 
+def do_print(env, args):
+    assert len(args) >= 0
+    for item in args:
+        print(do(env, item))        
+    return None
+
+def do_repeat(env, args):
+    assert len(args) == 3
+    
+
 # [lookup]
 OPS = {
     name.replace("do_", ""): func
@@ -45,6 +55,8 @@ OPS = {
 def do(env, expr):
     # Integers evaluate to themselves.
     if isinstance(expr, int):
+        return expr
+    if isinstance(expr, str):
         return expr
 
     # Lists trigger function calls.
