@@ -3,6 +3,43 @@
 import json
 import sys
 
+def do_print(env, args):
+    left = args[0]
+    right = args[1]
+    if type(args[0]) is list:
+        left = do(env, args[0])
+    if type(args[1]) is list:
+        right = do(env, args[1])
+    print(left, right)
+    return
+    
+def do_repeat(env, args):
+    temp = do(env,args)
+    for i in range(0, temp):
+        do(env, args[1])
+    return
+
+def do_equal(env, args):
+    left = do(env, args[0])
+    right = do(env, args[1])
+    return left == right
+
+def do_leq(env, args):
+    left = do(env, args[0])
+    right = do(env, args[1])
+    return left <= right
+
+def do_geq(env, args):
+    left = do(env, args[0])
+    right = do(env, args[1])
+    return left >= right
+
+def do_if(env, args):
+    if (do(env, args[0])):
+        do(env, args[1])
+    else:
+        do(env, args[2])
+
 def do_abs(env, args):
     assert len(args) == 1
     val = do(env, args[0])
