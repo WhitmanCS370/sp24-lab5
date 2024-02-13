@@ -20,6 +20,46 @@ def do_get(env, args):
     assert args[0] in env, f"Unknown variable {args[0]}"
     return env[args[0]]
 
+def do_if(env, args):
+    assert len(args) == 3
+    bool_pred = do(env, args[0])
+    if bool_pred:
+        do(env, args[1])
+    else:
+        do(env, args[2])
+
+def do_print(env, args):
+    assert len(args) > 0
+    output_str = ""
+    for item in args:
+        val = str(do(env, item))
+        output_str += val
+        print(val)
+
+def do_repeat(env, args):
+    assert len(args) == 2
+    assert args[0] > 0
+    for i in range(args[0]):
+        do(env, args[1])
+
+def do_equal(env, args):
+    assert len(args) == 2
+    left = do(env, args[0])
+    right = do(env, args[1])
+    return left == right
+
+def do_leq(env, args):
+    assert len(args) == 2
+    left = do(env, args[0])
+    right = do(env, args[1])
+    return left <= right
+
+def do_geq(env, args):
+    assert len(args) == 2
+    left = do(env, args[0])
+    right = do(env, args[1])
+    return left >= right
+
 def do_seq(env, args):
     assert len(args) > 0
     for item in args:
@@ -45,6 +85,9 @@ OPS = {
 def do(env, expr):
     # Integers evaluate to themselves.
     if isinstance(expr, int):
+        return expr
+    
+    if isinstance(expr, str):
         return expr
 
     # Lists trigger function calls.
