@@ -14,6 +14,46 @@ def do_add(env, args):
     right = do(env, args[1])
     return left + right
 
+def do_print(env, args):
+    assert len(args) >= 0 # Allow printing nothing
+    for item in args:
+        print(do(env,item))
+
+def do_array(env, args):
+    assert len(args) == 1 and isinstance(args[0], int)
+    return [None] * args[0]
+
+def do_while(env, args):
+    assert len(args) >= 2
+    while do(env, args[0]):
+        for arg in args[1:]:
+            do(env, arg)
+
+def do_repeat(env, args):
+    assert len(args) == 2
+    assert isinstance(args[0], int)
+    for i in range(args[0]):
+        do(env, args[1])
+
+def do_equal(env, args):
+    assert len(args) == 2
+    return do(env, args[0]) == do(env, args[1])
+
+def do_leq(env, args):
+    assert len(args) == 2
+    return do(env, args[0]) <= do(env, args[1])
+
+def do_geq(env, args):
+    assert len(args) == 2
+    return do(env, args[0]) >= do(env, args[1])
+
+def do_if(env, args):
+    assert len(args) == 2 or len(args) == 3
+    if do(env, args[0]):
+        do(env, args[1])
+    elif len(args) == 3:
+        do(env, args[2])
+
 def do_get(env, args):
     assert len(args) == 1
     assert isinstance(args[0], str)
@@ -44,7 +84,7 @@ OPS = {
 # [do]
 def do(env, expr):
     # Integers evaluate to themselves.
-    if isinstance(expr, int):
+    if isinstance(expr, int) or isinstance(expr, str):
         return expr
 
     # Lists trigger function calls.
