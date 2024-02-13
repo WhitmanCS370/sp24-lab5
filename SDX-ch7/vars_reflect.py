@@ -12,6 +12,21 @@ def do_repeat(env, args):
         do(env, args[1])
     return
 
+def do_equal(env, args):
+    return args[0] == args[1]
+
+def do_leq(env, args):
+    return args[0] <= args[1]
+
+def do_geq(env, args):
+    return args[0] >= args[1]
+
+def do_if(env, args):
+    if (do(env, args[0])):
+        do(args[1])
+    else:
+        do(args[2])
+
 def do_abs(env, args):
     assert len(args) == 1
     val = do(env, args[0])
