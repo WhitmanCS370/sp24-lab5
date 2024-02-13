@@ -33,6 +33,46 @@ def do_set(env, args):
     env[args[0]] = value
     return value
 
+def do_print(env, args):
+    assert len(args) >= 1
+    assert isinstance(args[0], str)
+    print(*args)
+    """for item in args:
+        result = (do(env,item))
+        print(result)
+        """
+    
+
+def do_repeat(env, args):
+    assert len(args) == 2
+    assert isinstance(args[0], int)
+    count = args[0]
+    loop_body = args[1]
+    for _ in range(count):
+        do(env, loop_body)
+
+def do_eq(env, args):
+    assert len(args) == 2
+    return args[0] == args[1]
+
+def do_leq(env, args):
+    assert len(args) == 2
+    return args[0] <= args[1]
+
+def do_geq(env, args):
+    assert len(args) == 2
+    return args[0] >= args[1]
+    
+def do_if(env, args):
+    assert len(args) == 3
+    boolean_predicate = args[0]
+    then_command = args[1]
+    else_command = args[2]
+    if boolean_predicate:
+        do(env, then_command)
+    else:
+        do(env, else_command)
+
 # [lookup]
 OPS = {
     name.replace("do_", ""): func
