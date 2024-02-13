@@ -1,4 +1,4 @@
-# sp25-lab5
+# sp24-lab5
 Materials for Week 5 Lab, which includes "An Interpreter" adapted from [Software Design by Example](https://third-bit.com/sdxpy/) by Greg Wilson.
 
 _February 13, 2024_
