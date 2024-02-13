@@ -113,6 +113,50 @@ def do_set(env, args):
     env[args[0]] = value
     return value
 
+def do_array(env, args):
+    check (len(args) == 2, args)
+    assert len(args) == 2
+    size = args[1]
+    array = [None] * size
+
+    return array
+
+def do_set_array(env, args):
+    assert len(args) == 3
+    array = do(env, args[0])
+    index = do(env, args[1])
+    value = do(env, args[2])
+    array[index] = value
+    return value
+
+def do_get_array(env, args):
+    assert len(args) == 2
+    array = do(env, args[0])
+    index = do(env, args[1])
+    return array[index]
+
+def do_if(env, args):
+    assert len(args) == 3
+    cond = do(env, args[0])
+    if cond:
+        return do(env, args[1])
+    else:
+        return do(env, args[2])
+    
+def do_leq(env, args):
+    assert len(args) == 2
+    return do(env, args[0]) <= do(env, args[1])
+
+def repeat(env, args):
+    count = do(env, args[0])
+    for i in range(count):
+        do(env, args[1])
+    
+
+def print(env, args):
+    for a in args:
+        print(do(env, a))
+
 # Lookup table of operations.
 OPERATIONS = {
     name.replace("do_", ""): func
@@ -126,6 +170,21 @@ def do(env, instruction):
     op, args = instruction[0], instruction[1:]
     assert op in OPERATIONS
     return OPERATIONS[op](env, args)
+
+def check(constraint, args):
+    try:
+        do(env, args)
+    except:
+        raise TLLException(f"Error: {instruction}")
+
+class TLLException(Exception):
+    def __init__(self, message):
+        self.message = message
+    
+    def __str__(self):
+        return self.message
+    
+    
 
 def main():
     assert len(sys.argv) == 2, "Usage: stmt.py filename"
