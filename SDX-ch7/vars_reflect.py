@@ -40,8 +40,11 @@ def do_print(env, args):
     return None
 
 def do_repeat(env, args):
-    assert len(args) == 3
-    
+    assert len(args) == 2
+    assert isinstance(args[0], int)
+    for i in range(args[0]):
+        do(env, args[1])
+    return None
 
 # [lookup]
 OPS = {
