@@ -1,0 +1,5 @@
+["if",
+		["leq", ["get", "a"], 10],
+		["print", "small", ["get", "a"]],
+		["print", "large", ["get", "a"]]
+	    ]

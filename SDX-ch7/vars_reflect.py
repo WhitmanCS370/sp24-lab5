@@ -33,6 +33,44 @@ def do_set(env, args):
     env[args[0]] = value
     return value
 
+def do_print(env, args):
+    assert len(args) >= 1
+    assert isinstance(args[0], str)
+    for item in args:
+        result = do(env,item)
+        print(result)  
+
+def do_repeat(env, args):
+    assert len(args) == 2
+    assert isinstance(args[0], int)
+    count = args[0]
+    loop_body = args[1]
+    for _ in range(count):
+        result = do(env, loop_body)
+    return result
+
+def do_eq(env, args):
+    assert len(args) == 2
+    return args[0] == args[1]
+
+def do_leq(env, args):
+    assert len(args) == 2
+    return args[0] <= args[1]
+
+def do_geq(env, args):
+    assert len(args) == 2
+    return args[0] >= args[1]
+    
+def do_if(env, args):
+    assert len(args) == 3
+    boolean_predicate = args[0]
+    then_command = args[1]
+    else_command = args[2]
+    if do(boolean_predicate[0], boolean_predicate[1:]):
+        do(then_command[0], then_command[1:])
+    else:
+        do(else_command[0], else_command[1:])
+
 # [lookup]
 OPS = {
     name.replace("do_", ""): func
@@ -45,6 +83,8 @@ OPS = {
 def do(env, expr):
     # Integers evaluate to themselves.
     if isinstance(expr, int):
+        return expr
+    if isinstance(expr, str):
         return expr
 
     # Lists trigger function calls.
