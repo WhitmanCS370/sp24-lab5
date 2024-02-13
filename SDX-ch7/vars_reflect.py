@@ -33,6 +33,48 @@ def do_set(env, args):
     env[args[0]] = value
     return value
 
+def do_print(env, args):
+    assert len(args) == 2
+    value = do(env, args[1])
+    env[args[0]] = value
+    print(args[0], value)
+
+def do_repeat(env, args):
+    assert len(args) == 2
+    assert isinstance(args[0], int)
+    assert args[0] > 0
+    for c in range(args[0]):
+        result = do(env, args[1])
+
+    return result
+
+def do_if(env, args):
+    assert len(args) > 0
+    result = None
+    # cond = do(env, args)
+    if args[0]:
+        result = do(env, args[1])
+    else:
+        result = do(env, args[2])
+    # return result
+
+def do_equal(env, args):
+    assert len(args) == 2
+    result = args[0] == args[1]
+    return result
+
+def do_leq(env, args):
+    assert len(args) == 2
+    result = args[0] <= args[1]
+    return result
+
+def do_geq(env, args):
+    assert len(args) == 2
+    result = args[0] >= args[1]
+    return result
+
+
+
 # [lookup]
 OPS = {
     name.replace("do_", ""): func
