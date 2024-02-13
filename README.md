@@ -7,12 +7,12 @@ Organization:
 * SDX-ch7: The code files for the _SDX Ch.7_ activity (as downloaded directly from the book website, unmodified) 
 
 ## Team Members for Part 1
-Enter your names here
+Terence and Rhys
 
 ## Team Roles for Part 1
 Who will start out as
-* DRIVER: Driver's name
-* NAVIGATOR: Navigator's name
+* DRIVER: Rhys
+* NAVIGATOR: Terence
 
 You will switch halfway through the _SDX Ch. 7_ activity.
 
