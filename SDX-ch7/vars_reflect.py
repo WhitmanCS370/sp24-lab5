@@ -14,7 +14,8 @@ def do_print(env, args):
     return
     
 def do_repeat(env, args):
-    for i in range(0, args[0]):
+    temp = do(env,args)
+    for i in range(0, temp):
         do(env, args[1])
     return
 
