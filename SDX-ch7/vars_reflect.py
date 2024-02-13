@@ -3,6 +3,15 @@
 import json
 import sys
 
+def do_print(env, args):
+    print(args[0], args[1])
+    return
+    
+def do_repeat(env, args):
+    for i in range(0, args[0]):
+        do(env, args[1])
+    return
+
 def do_abs(env, args):
     assert len(args) == 1
     val = do(env, args[0])
