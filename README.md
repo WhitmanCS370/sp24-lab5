@@ -21,7 +21,10 @@ You will switch halfway through the _SDX Ch. 7_ activity.
 Write your answers to the questions below.
 
 * What were the main ideas from SDX chapter 7?
-* How an interpreter works and how it parses and interprets information.
+How an interpreter works and how it parses and interprets information.
 
 * What questions did you have about the material in the chapters? What did you find confusing?
-* We don't have any main questions. 
+We don't have any main questions. 
+
+Exercise 1:
+We implemented the required functions. However, the if statement doesn't come back as large, and initial isn't printed from the test case.
